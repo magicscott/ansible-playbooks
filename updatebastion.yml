@@ -1,5 +1,5 @@
 ---
-- hosts: dmz
+- hosts: DMZ
   become: true
   become_user: root
   tasks:
