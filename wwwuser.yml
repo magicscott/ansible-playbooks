@@ -1,0 +1,27 @@
+---
+- hosts: webservers
+  remote_user: scott
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  connection: ssh
+  tasks:
+   - name: Add group "www-data" to remote server
+     group:
+       name: www-data
+       gid: 2020
+       state: present
+
+   - name: Add user "www-user" to remote server
+     user:
+       name: www-user
+       comment: "www User"
+       uid: 2001
+       group: www-data
+       append: yes
+       shell: /bin/bash
+       generate_ssh_key: yes
+       ssh_key_bits: 2048
+       ssh_key_file: .ssh/id_rsa
+
+...

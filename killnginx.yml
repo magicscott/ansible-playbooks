@@ -1,0 +1,16 @@
+---
+- hosts: webservers
+  tasks:
+   - name: Stop Nginx
+     systemd:
+       name: nginx
+       state: stopped
+
+   - name: Uninstall Nginx
+     apt: 
+       name: nginx
+       state: absent 
+
+...
+   
+

@@ -1,0 +1,29 @@
+---
+- hosts: webservers
+  vars:
+   - docroot: /var/www/brodway.local/public
+  tasks:
+   - name: Add Nginx Repository
+     apt_repository: repo='ppa:nginx/stable' state=present
+
+   - name: Install Nginx
+     apt: pkg=nginx state=present update_cache=true
+     notify:
+      - Start Nginx
+
+   - name: Create Web Root
+     file: dest={{ '{{' }} docroot {{ '}}' }} mode=775 state=directory owner=www-user group=www-data
+     notify:
+      - Reload Nginx
+
+  handlers:
+   - name: Start Nginx
+     systemd:
+       name: nginx
+       state: started
+
+   - name: Reload Nginx
+     systemd: 
+       name: nginx
+       state: restarted
+...
