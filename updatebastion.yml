@@ -1,7 +1,7 @@
 ---
 - name: Update Bastion Host
   hosts: DMZ
-  remote_user: scott
+  become: yes
 
   tasks:
     - name: Update apt-get repo and cache
